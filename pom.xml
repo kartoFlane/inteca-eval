@@ -22,7 +22,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<docker.image.prefix>kartoFlane</docker.image.prefix>
+		<!-- TBachminski:
+		Prefix here needs to be a valid Docker repository, otherwise build fails.
+		I'd use 'kartoFlane' as mine, however I don't have a Docker account
+		(and don't feel like creating one for the sake of a toy project)
+		 -->
+		<docker.image.prefix>springio</docker.image.prefix>
 	</properties>
 
 	<dependencies>

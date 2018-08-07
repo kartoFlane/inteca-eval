@@ -1,4 +1,4 @@
-package com.kartoflane.springmaventest;
+package com.kartoflane.inteca.eval.spring;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,10 +7,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringMavenTestApplicationTests {
+public class ApplicationTests {
 
 	@Test
 	public void contextLoads() {
 	}
-
 }

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/family")
@@ -91,9 +92,12 @@ public class FamilyRestController {
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
-	@PostMapping("/search")
+	@GetMapping("/search")
 	Collection<Family> searchFamily(@RequestBody Child input) {
-		// TODO
-		return null;
+		return familyRepository.findAllById(
+				childRepository.findAll(Example.of(input)).stream()
+						.map(Child::getFamilyId)
+						.collect(Collectors.toList())
+		);
 	}
 }

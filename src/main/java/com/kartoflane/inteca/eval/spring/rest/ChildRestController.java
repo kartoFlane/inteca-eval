@@ -47,7 +47,7 @@ public class ChildRestController {
 				.orElseThrow(() -> new ChildNotFoundException(childId));
 	}
 
-	@PostMapping("/search")
+	@GetMapping("/search")
 	Collection<Child> searchChild(@RequestBody Child input) {
 		return childRepository.findAll(Example.of(input));
 	}

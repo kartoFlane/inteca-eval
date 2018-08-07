@@ -46,7 +46,7 @@ public class FatherRestController {
 				.orElseThrow(() -> new FatherNotFoundException(fatherId));
 	}
 
-	@PostMapping("/search")
+	@GetMapping("/search")
 	Collection<Father> searchFather(@RequestBody Father input) {
 		return fatherRepository.findAll(Example.of(input));
 	}

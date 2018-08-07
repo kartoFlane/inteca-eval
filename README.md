@@ -91,3 +91,74 @@ docker run -t \
 ```shell
 TODO
 ```
+
+
+## REST endpoint documentation
+
+
+### `/family`
+
+* `GET` - returns a list of all families.
+* `POST` - creates a new empty family entity, and returns a response with its location.
+
+### `/family/$id`
+
+* `GET` - returns a view of family with id `$id`.
+* `PUT` - modifies the family with id `$id` either by adding a father, or a child. The specific action taken depends on the content of the request body:
+	* `{ "fatherId": # }` - adds a father
+	* `{ "childId": # }` - adds a child
+
+### `/family/search`
+
+* `GET` - returns a list of all families which contain at least one child which matches any of the specified by arguments:
+	* `firstName` - string
+	* `secondName` - string
+	* `pesel` - string
+	* `birthDate` - string, with date format: `yyyy-MM-dd`
+	* `sex` - string, values: `M` or `F`
+
+
+### `/father`
+
+* `GET` - returns a list of all fathers.
+* `POST` - creates a new father entity from arguments specified in the request body, and returns a response with its location:
+	* `firstName` - string
+	* `secondName` - string
+	* `pesel` - string
+	* `birthDate` - string, with date format: `yyyy-MM-dd`
+
+### `/father/$id`
+
+* `GET` - returns a view of father with id `$id`.
+
+### `/father/search`
+
+* `GET` - returns a list of all fathers which match any of the specified by arguments:
+	* `firstName` - string
+	* `secondName` - string
+	* `pesel` - string
+	* `birthDate` - string, with date format: `yyyy-MM-dd`
+
+
+### `/child`
+
+* `GET` - returns a list of all children.
+* `POST` - creates a new child entity from arguments specified in the request body, and returns a response with its location:
+	* `firstName` - string
+	* `secondName` - string
+	* `pesel` - string
+	* `birthDate` - string, with date format: `yyyy-MM-dd`
+	* `sex` - string, values: `M` or `F`
+
+### `/child/$id`
+
+* `GET` - returns a view of child with id `$id`.
+
+### `/father/search`
+
+* `GET` - returns a list of all children which match any of the specified by arguments:
+	* `firstName` - string
+	* `secondName` - string
+	* `pesel` - string
+	* `birthDate` - string, with date format: `yyyy-MM-dd`
+	* `sex` - string, values: `M` or `F`

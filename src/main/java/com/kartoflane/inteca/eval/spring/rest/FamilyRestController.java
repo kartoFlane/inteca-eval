@@ -50,8 +50,23 @@ public class FamilyRestController {
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
-	@PostMapping("/{familyId}/father")
-	ResponseEntity<?> addFatherToFamily(@PathVariable Long familyId, @RequestBody Long fatherId) {
+	@PutMapping("/{familyId}")
+	ResponseEntity<?> modifyFamily(@PathVariable Long familyId, @RequestBody ModifyFamilyPayload input) {
+		if (input.isValid()) {
+			if (input.hasFatherId()) {
+				return addFatherToFamily(familyId, input.getFatherId());
+			} else if (input.hasChildId()) {
+				return addChildToFamily(familyId, input.getChildId());
+			} else {
+				// This path can only be hit in case of an implementation error in the server.
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Implementation error");
+			}
+		}
+
+		return ResponseEntity.badRequest().build();
+	}
+
+	ResponseEntity<?> addFatherToFamily(Long familyId, Long fatherId) {
 		return familyRepository.findById(familyId)
 				.map(family -> fatherRepository.findById(fatherId)
 						.map(father -> {
@@ -72,8 +87,7 @@ public class FamilyRestController {
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
-	@PostMapping("/{familyId}/child")
-	ResponseEntity<?> addChildToFamily(@PathVariable Long familyId, @RequestBody Long childId) {
+	ResponseEntity<?> addChildToFamily(Long familyId, Long childId) {
 		return familyRepository.findById(familyId)
 				.map(family -> childRepository.findById(childId)
 						.map(child -> {

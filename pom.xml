@@ -13,5 +13,6 @@
 
 	<modules>
 		<module>spring</module>
+		<module>angular</module>
 	</modules>
 </project>

@@ -19,15 +19,14 @@ After the Maven script is finished, two Docker images will have been created: `t
 
 ### ...via `compose` / `stack`
 
-To simplify deployment, [`a Compose file`](#stack.yml) is provided, which starts all three containers. To run it, change the Docker terminal's working directory to the project's root directory, and executing the following command:
+To simplify deployment, [`a Compose file`](#compose.yml) is provided, which starts all three containers. To run it, change the Docker terminal's working directory to the project's root directory, and executing the following command:
 ```shell
-docker-compose ....
+docker-compose up -p tb
 ```
--- TODO
 
-...or when running Docker Toolbox, which doesn't have `docker compose`, instead use:
+When running Docker Toolbox, the above command will cause the containers to attempt to connect to incorrect addresses.
 ```shell
-docker stack deploy -c stack.yml tb-stack
+docker stack deploy -c docker-compose.yml tb
 ```
 
 If the Docker node isn't part of a swarm yet, you might need to initialize one first:
@@ -42,7 +41,7 @@ docker swarm init --advertise-addr:192.168.99.100:2376
 
 To stop the entire stack, run:
 ```shell
-docker stack rm tb-stack
+docker stack rm tb
 ```
 
 After the stack has been deployed, the service will be available at `localhost:8080`, or (in case of Docker Toolbox) at `DOCKER_HOST`: `192.168.99.100:8080`.

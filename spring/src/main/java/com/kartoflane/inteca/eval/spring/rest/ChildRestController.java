@@ -29,10 +29,13 @@ public class ChildRestController {
 			input.getSecondName() == null ||
 			input.getPesel() == null ||
 			input.getBirthDate() == null ||
-			input.getSex() == null ||
-			!input.getSex().matches("[MF]]")
+			input.getSex() == null
 		) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("Missing a required field, got: " + input.toString());
+		}
+
+		if (!input.getSex().matches("[MF]")) {
+			return ResponseEntity.badRequest().body("Invalid value for field 'sex': " + input.getSex());
 		}
 
 		Child result = childRepository.save(new Child(

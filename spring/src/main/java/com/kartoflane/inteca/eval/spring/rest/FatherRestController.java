@@ -24,6 +24,15 @@ public class FatherRestController {
 
 	@PostMapping
 	ResponseEntity<?> createFather(@RequestBody Father input) {
+		if (
+			input.getFirstName() == null ||
+			input.getSecondName() == null ||
+			input.getPesel() == null ||
+			input.getBirthDate() == null
+		) {
+			return ResponseEntity.badRequest().build();
+		}
+
 		Father result = fatherRepository.save(new Father(
 				input.getFirstName(),
 				input.getSecondName(),
@@ -47,7 +56,7 @@ public class FatherRestController {
 	}
 
 	@GetMapping("/search")
-	Collection<Father> searchFather(@RequestBody Father input) {
+	Collection<Father> searchFather(Father input) {
 		return fatherRepository.findAll(Example.of(input));
 	}
 }

@@ -24,6 +24,17 @@ public class ChildRestController {
 
 	@PostMapping
 	ResponseEntity<?> createChild(@RequestBody Child input) {
+		if (
+			input.getFirstName() == null ||
+			input.getSecondName() == null ||
+			input.getPesel() == null ||
+			input.getBirthDate() == null ||
+			input.getSex() == null ||
+			!input.getSex().matches("[MF]]")
+		) {
+			return ResponseEntity.badRequest().build();
+		}
+
 		Child result = childRepository.save(new Child(
 				input.getFirstName(),
 				input.getSecondName(),
@@ -48,7 +59,7 @@ public class ChildRestController {
 	}
 
 	@GetMapping("/search")
-	Collection<Child> searchChild(@RequestBody Child input) {
+	Collection<Child> searchChild(Child input) {
 		return childRepository.findAll(Example.of(input));
 	}
 }

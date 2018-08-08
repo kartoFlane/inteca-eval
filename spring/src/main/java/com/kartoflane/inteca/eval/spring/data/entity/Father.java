@@ -1,5 +1,9 @@
 package com.kartoflane.inteca.eval.spring.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,8 +12,9 @@ public class Father {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="family_id")
+	@JoinColumn(name = "family_id")
 	private Family family;
 
 	private String firstName;
@@ -81,9 +86,14 @@ public class Father {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Father[id=%d, firstName='%s', secondName='%s', pesel='%s', birthDate='%s']",
-				id, firstName, secondName, pesel, birthDate
-		);
+		// Use JSON representations for debugging convenience.
+		// Don't care about exceptions at the moment.
+		try {
+			return new ObjectMapper().writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

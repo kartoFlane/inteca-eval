@@ -28,7 +28,7 @@ public class FamilyRestController {
 
 	@GetMapping
 	Collection<Family> readFamilies() {
-		return this.familyRepository.findAll();
+		return familyRepository.findAll();
 	}
 
 	@PostMapping()
@@ -107,7 +107,7 @@ public class FamilyRestController {
 	}
 
 	@GetMapping("/search")
-	Collection<Family> searchFamily(@RequestBody Child input) {
+	Collection<Family> searchFamily(Child input) {
 		return familyRepository.findAllById(
 				childRepository.findAll(Example.of(input)).stream()
 						.map(Child::getFamilyId)

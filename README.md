@@ -46,10 +46,6 @@ docker stack rm tb
 
 After the stack has been deployed, the service will be available at `localhost:8080`, or (in case of Docker Toolbox) at `DOCKER_HOST`: `192.168.99.100:8080`.
 
-#### Note:
-
-The DB container takes some to initialize, during which the SpringBoot app container will try to connect to the database, fail, and thus crash. It will keep restarting and retrying until it succeeds, which on my PC usually takes about 5 minutes from the moment the DB container has been created.
-
 
 ### ...each image separately
 

@@ -2,7 +2,17 @@ version: '3.1'
 
 services:
   db:
-    image: mysql:latest
+    # TBachminski:
+    # Trying to use the latest version of mysql causes the database
+    # container to throw a hissy fit about "mbind: Operation not permitted",
+    # which in turn brings up database container startup time from about
+    # 1-2 minutes to over 5 minutes.
+    #
+    # Use a specific, older version of mysql to avoid this.
+    # Alternatively can use a custom security profile for Docker,
+    # but this is good enough for now.
+    # https://github.com/docker-library/mysql/issues/303
+    image: mysql:5.7.22
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:

@@ -19,7 +19,7 @@
 		Trying to do that causes the build fail with a misleading message
 		("connection reset by peer: socket write error")
 		 -->
-		<docker.image.prefix>kartoflane</docker.image.prefix>
+		<docker.image.prefix>tbachminski</docker.image.prefix>
 	</properties>
 
 	<parent>

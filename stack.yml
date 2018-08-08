@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: dbpass
 
   spring-app:
-    image: kartoflane/inteca-eval-spring
+    image: tbachminski/inteca-eval-spring
     restart: always
     depends_on:
       - db

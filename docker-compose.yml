@@ -36,3 +36,9 @@ services:
       DATABASE_NAME: sqldb
       DATABASE_USER: dbuser
       DATABASE_PASSWORD: dbpass
+
+  angular-app:
+    image: tbachminski/inteca-eval-angular
+    restart: always
+    ports:
+      - 4200:80

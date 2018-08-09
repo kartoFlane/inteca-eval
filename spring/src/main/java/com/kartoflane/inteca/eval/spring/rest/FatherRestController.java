@@ -46,7 +46,7 @@ public class FatherRestController {
 				.buildAndExpand(result.getId())
 				.toUri();
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(result);
 	}
 
 	@GetMapping("/{fatherId}")

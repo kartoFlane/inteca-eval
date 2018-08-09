@@ -41,7 +41,7 @@ public class FamilyRestController {
 				.buildAndExpand(family.getId())
 				.toUri();
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(family);
 	}
 
 	@GetMapping("/{familyId}")
@@ -72,9 +72,12 @@ public class FamilyRestController {
 						.map(father -> {
 							if (father.getFamilyId() == null) {
 								father.setFamily(family);
-								fatherRepository.save(father);
+								family.setFather(father);
 
-								return ResponseEntity.noContent().build();
+								fatherRepository.save(father);
+								familyRepository.save(family);
+
+								return ResponseEntity.ok().body(family);
 							} else {
 								// Already has a father.
 								// 'Add' implies that it should only set father if it doesn't exist,
@@ -95,7 +98,7 @@ public class FamilyRestController {
 								child.setFamily(family);
 								childRepository.save(child);
 
-								return ResponseEntity.noContent().build();
+								return ResponseEntity.ok().body(family);
 							} else {
 								// Already contains the child
 								return ResponseEntity.status(HttpStatus.CONFLICT).build();

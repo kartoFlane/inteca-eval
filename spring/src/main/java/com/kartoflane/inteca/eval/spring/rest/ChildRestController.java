@@ -52,7 +52,7 @@ public class ChildRestController {
 				.buildAndExpand(result.getId())
 				.toUri();
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(result);
 	}
 
 	@GetMapping("/{childId}")

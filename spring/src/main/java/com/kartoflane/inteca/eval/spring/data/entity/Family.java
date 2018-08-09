@@ -18,7 +18,7 @@ public class Family {
 	private Integer id;
 
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "family")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "family")
 	private Father father;
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "family")

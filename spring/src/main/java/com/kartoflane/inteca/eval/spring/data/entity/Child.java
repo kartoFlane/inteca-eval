@@ -19,6 +19,7 @@ public class Child {
 
 	private String firstName;
 	private String secondName;
+	@Column(length = 11)
 	private String pesel;
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;

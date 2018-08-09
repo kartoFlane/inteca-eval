@@ -45,13 +45,13 @@ public class FamilyRestController {
 	}
 
 	@GetMapping("/{familyId}")
-	Family readFamily(@PathVariable Long familyId) {
+	Family readFamily(@PathVariable Integer familyId) {
 		return familyRepository.findById(familyId)
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
 	@PutMapping("/{familyId}")
-	ResponseEntity<?> modifyFamily(@PathVariable Long familyId, @RequestBody ModifyFamilyPayload input) {
+	ResponseEntity<?> modifyFamily(@PathVariable Integer familyId, @RequestBody ModifyFamilyPayload input) {
 		if (input.isValid()) {
 			if (input.hasFatherId()) {
 				return addFatherToFamily(familyId, input.getFatherId());
@@ -66,7 +66,7 @@ public class FamilyRestController {
 		return ResponseEntity.badRequest().build();
 	}
 
-	ResponseEntity<?> addFatherToFamily(Long familyId, Long fatherId) {
+	ResponseEntity<?> addFatherToFamily(Integer familyId, Integer fatherId) {
 		return familyRepository.findById(familyId)
 				.map(family -> fatherRepository.findById(fatherId)
 						.map(father -> {
@@ -87,7 +87,7 @@ public class FamilyRestController {
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
-	ResponseEntity<?> addChildToFamily(Long familyId, Long childId) {
+	ResponseEntity<?> addChildToFamily(Integer familyId, Integer childId) {
 		return familyRepository.findById(familyId)
 				.map(family -> childRepository.findById(childId)
 						.map(child -> {

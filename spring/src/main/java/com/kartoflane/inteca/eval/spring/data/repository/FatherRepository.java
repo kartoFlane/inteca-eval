@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Collection;
 import java.util.Date;
 
-public interface FatherRepository extends JpaRepository<Father, Long> {
+public interface FatherRepository extends JpaRepository<Father, Integer> {
 	Collection<Father> findByFirstName(String firstName);
 
 	Collection<Father> findBySecondName(String secondName);

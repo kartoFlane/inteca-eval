@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Family {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "family")
@@ -28,15 +28,15 @@ public class Family {
 	public Family() {
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Long getFatherId() {
+	public Integer getFatherId() {
 		return father != null
 				? father.getId()
 				: null;
@@ -50,7 +50,7 @@ public class Family {
 		return children.add(child);
 	}
 
-	public Collection<Long> getChildrenIds() {
+	public Collection<Integer> getChildrenIds() {
 		return children.stream()
 				.map(Child::getId)
 				.collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));

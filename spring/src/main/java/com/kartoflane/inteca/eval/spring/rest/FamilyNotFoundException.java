@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class FamilyNotFoundException extends RuntimeException {
-	FamilyNotFoundException(Long id) {
+	FamilyNotFoundException(Integer id) {
 		super(String.format("Could not find family with id '%d'.", id));
 	}
 }

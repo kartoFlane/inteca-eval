@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ChildNotFoundException extends RuntimeException {
-	ChildNotFoundException(Long id) {
+	ChildNotFoundException(Integer id) {
 		super(String.format("Could not find child with id '%d'.", id));
 	}
 }

@@ -50,7 +50,7 @@ public class FatherRestController {
 	}
 
 	@GetMapping("/{fatherId}")
-	Father readFather(@PathVariable Long fatherId) {
+	Father readFather(@PathVariable Integer fatherId) {
 		return fatherRepository.findById(fatherId)
 				.orElseThrow(() -> new FatherNotFoundException(fatherId));
 	}

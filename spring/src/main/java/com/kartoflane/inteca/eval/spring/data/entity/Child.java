@@ -11,7 +11,7 @@ import java.util.Date;
 public class Child {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "family_id")
@@ -37,15 +37,15 @@ public class Child {
 		this.birthDate = birthDate;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Long getFamilyId() {
+	public Integer getFamilyId() {
 		return family != null
 				? family.getId()
 				: null;

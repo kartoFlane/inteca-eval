@@ -5,26 +5,26 @@ import org.springframework.lang.Nullable;
 
 public class ModifyFamilyPayload {
 	@Nullable
-	private Long fatherId;
+	private Integer fatherId;
 	@Nullable
-	private Long childId;
+	private Integer childId;
 
 	private ModifyFamilyPayload() {
 	}
 
-	public static ModifyFamilyPayload withFatherId(@NonNull Long fatherId) {
+	public static ModifyFamilyPayload withFatherId(@NonNull Integer fatherId) {
 		ModifyFamilyPayload p = new ModifyFamilyPayload();
 		p.fatherId = fatherId;
 		return p;
 	}
 
-	public static ModifyFamilyPayload withChildId(@NonNull Long childId) {
+	public static ModifyFamilyPayload withChildId(@NonNull Integer childId) {
 		ModifyFamilyPayload p = new ModifyFamilyPayload();
 		p.childId = childId;
 		return p;
 	}
 
-	public Long getFatherId() {
+	public Integer getFatherId() {
 		return fatherId;
 	}
 
@@ -32,7 +32,7 @@ public class ModifyFamilyPayload {
 		return fatherId != null;
 	}
 
-	public Long getChildId() {
+	public Integer getChildId() {
 		return childId;
 	}
 

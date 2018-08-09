@@ -56,7 +56,7 @@ public class ChildRestController {
 	}
 
 	@GetMapping("/{childId}")
-	Child readChild(@PathVariable Long childId) {
+	Child readChild(@PathVariable Integer childId) {
 		return childRepository.findById(childId)
 				.orElseThrow(() -> new ChildNotFoundException(childId));
 	}

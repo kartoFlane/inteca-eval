@@ -30,7 +30,7 @@ public class FatherRestController {
 			input.getPesel() == null ||
 			input.getBirthDate() == null
 		) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("Missing a required field, got: " + input.toString());
 		}
 
 		Father result = fatherRepository.save(new Father(

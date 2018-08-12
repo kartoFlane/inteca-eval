@@ -1,6 +1,8 @@
 package com.kartoflane.inteca.eval.spring.rest;
 
+import com.kartoflane.inteca.eval.spring.data.entity.Family;
 import com.kartoflane.inteca.eval.spring.data.entity.Father;
+import com.kartoflane.inteca.eval.spring.data.repository.FamilyRepository;
 import com.kartoflane.inteca.eval.spring.data.repository.FatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -16,6 +18,8 @@ import java.util.Collection;
 public class FatherRestController {
 	@Autowired
 	private FatherRepository fatherRepository;
+	@Autowired
+	private FamilyRepository familyRepository;
 
 
 	@GetMapping()
@@ -34,17 +38,16 @@ public class FatherRestController {
 	}
 
 	@PostMapping
-	ResponseEntity<?> createFather(@RequestBody Father input) {
-		if (!input.isValid()) {
+	ResponseEntity<?> addFatherToFamily(Integer familyId, @RequestBody Father input) {
+		if (!input.isValid() || input.getId() != null) {
 			return ResponseEntity.badRequest().build();
 		}
 
-		Father result = fatherRepository.save(new Father(
-				input.getFirstName(),
-				input.getSecondName(),
-				input.getPesel(),
-				input.getBirthDate()
-		));
+		Family family = familyRepository.findById(familyId)
+				.orElseThrow(() -> new FamilyNotFoundException(familyId));
+
+		input.setFamily(family);
+		Father result = fatherRepository.save(input);
 
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()

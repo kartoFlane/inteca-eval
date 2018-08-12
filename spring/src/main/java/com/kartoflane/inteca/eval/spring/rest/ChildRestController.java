@@ -1,7 +1,9 @@
 package com.kartoflane.inteca.eval.spring.rest;
 
 import com.kartoflane.inteca.eval.spring.data.entity.Child;
+import com.kartoflane.inteca.eval.spring.data.entity.Family;
 import com.kartoflane.inteca.eval.spring.data.repository.ChildRepository;
+import com.kartoflane.inteca.eval.spring.data.repository.FamilyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +18,15 @@ import java.util.Collection;
 public class ChildRestController {
 	@Autowired
 	private ChildRepository childRepository;
+	@Autowired
+	private FamilyRepository familyRepository;
 
 
 	@GetMapping
 	Collection<Child> readChildren(Child input) {
 		if (input == null) {
 			return childRepository.findAll();
-		}
-		else {
+		} else {
 			return childRepository.findAll(Example.of(input));
 		}
 	}
@@ -35,18 +38,16 @@ public class ChildRestController {
 	}
 
 	@PostMapping
-	ResponseEntity<?> createChild(@RequestBody Child input) {
-		if (!input.isValid()) {
+	ResponseEntity<?> addChildToFamily(Integer familyId, @RequestBody Child input) {
+		if (!input.isValid() || input.getId() != null) {
 			return ResponseEntity.badRequest().build();
 		}
 
-		Child result = childRepository.save(new Child(
-				input.getFirstName(),
-				input.getSecondName(),
-				input.getSex(),
-				input.getPesel(),
-				input.getBirthDate()
-		));
+		Family family = familyRepository.findById(familyId)
+				.orElseThrow(() -> new FamilyNotFoundException(familyId));
+
+		input.setFamily(family);
+		Child result = childRepository.save(input);
 
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()

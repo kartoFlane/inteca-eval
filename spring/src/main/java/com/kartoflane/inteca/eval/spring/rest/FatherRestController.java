@@ -17,9 +17,20 @@ public class FatherRestController {
 	@Autowired
 	private FatherRepository fatherRepository;
 
-	@GetMapping
-	Collection<Father> readFathers() {
-		return fatherRepository.findAll();
+
+	@GetMapping()
+	Collection<Father> readFathers(Father input) {
+		if (input == null) {
+			return fatherRepository.findAll();
+		} else {
+			return fatherRepository.findAll(Example.of(input));
+		}
+	}
+
+	@GetMapping("/{fatherId}")
+	Father readFather(@PathVariable Integer fatherId) {
+		return fatherRepository.findById(fatherId)
+				.orElseThrow(() -> new FatherNotFoundException(fatherId));
 	}
 
 	@PostMapping
@@ -42,16 +53,5 @@ public class FatherRestController {
 				.toUri();
 
 		return ResponseEntity.created(location).body(result);
-	}
-
-	@GetMapping("/{fatherId}")
-	Father readFather(@PathVariable Integer fatherId) {
-		return fatherRepository.findById(fatherId)
-				.orElseThrow(() -> new FatherNotFoundException(fatherId));
-	}
-
-	@GetMapping("/search")
-	Collection<Father> searchFather(Father input) {
-		return fatherRepository.findAll(Example.of(input));
 	}
 }

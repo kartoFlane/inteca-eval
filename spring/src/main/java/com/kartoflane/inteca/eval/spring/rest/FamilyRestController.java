@@ -26,9 +26,25 @@ public class FamilyRestController {
 	@Autowired
 	private ChildRepository childRepository;
 
-	@GetMapping
-	Collection<Family> readFamilies() {
-		return familyRepository.findAll();
+
+	@GetMapping()
+	Collection<Family> readFamilies(Child input) {
+		if (input == null) {
+			return familyRepository.findAll();
+		}
+		else {
+			return familyRepository.findAllById(
+					childRepository.findAll(Example.of(input)).stream()
+							.map(Child::getFamilyId)
+							.collect(Collectors.toList())
+			);
+		}
+	}
+
+	@GetMapping("/{familyId}")
+	Family readFamily(@PathVariable Integer familyId) {
+		return familyRepository.findById(familyId)
+				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
 	@PostMapping()
@@ -42,12 +58,6 @@ public class FamilyRestController {
 				.toUri();
 
 		return ResponseEntity.created(location).body(family);
-	}
-
-	@GetMapping("/{familyId}")
-	Family readFamily(@PathVariable Integer familyId) {
-		return familyRepository.findById(familyId)
-				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
 
 	@PutMapping("/{familyId}")
@@ -107,14 +117,5 @@ public class FamilyRestController {
 						.orElseThrow(() -> new ChildNotFoundException(childId))
 				)
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
-	}
-
-	@GetMapping("/search")
-	Collection<Family> searchFamily(Child input) {
-		return familyRepository.findAllById(
-				childRepository.findAll(Example.of(input)).stream()
-						.map(Child::getFamilyId)
-						.collect(Collectors.toList())
-		);
 	}
 }

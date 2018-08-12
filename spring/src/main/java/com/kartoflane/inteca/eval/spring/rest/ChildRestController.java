@@ -17,9 +17,21 @@ public class ChildRestController {
 	@Autowired
 	private ChildRepository childRepository;
 
+
 	@GetMapping
-	Collection<Child> readChildren() {
-		return childRepository.findAll();
+	Collection<Child> readChildren(Child input) {
+		if (input == null) {
+			return childRepository.findAll();
+		}
+		else {
+			return childRepository.findAll(Example.of(input));
+		}
+	}
+
+	@GetMapping("/{childId}")
+	Child readChild(@PathVariable Integer childId) {
+		return childRepository.findById(childId)
+				.orElseThrow(() -> new ChildNotFoundException(childId));
 	}
 
 	@PostMapping
@@ -43,16 +55,5 @@ public class ChildRestController {
 				.toUri();
 
 		return ResponseEntity.created(location).body(result);
-	}
-
-	@GetMapping("/{childId}")
-	Child readChild(@PathVariable Integer childId) {
-		return childRepository.findById(childId)
-				.orElseThrow(() -> new ChildNotFoundException(childId));
-	}
-
-	@GetMapping("/search")
-	Collection<Child> searchChild(Child input) {
-		return childRepository.findAll(Example.of(input));
 	}
 }

@@ -1,0 +1,71 @@
+<div class="jumbotron container" style="width: 500px;" *ngIf="step < STEP_FINISH">
+  <!--
+    TBachminski:
+    Could probably tidy this up by moving input elements to their own components
+    (FatherModifyComponent, etc.)
+    Could also rework using forms, since this technically is one.
+  -->
+
+  <div id="step-father" class="form-group" *ngIf="step === STEP_FATHER">
+    <h3>Step one: father</h3>
+
+    <div class="card" style="margin: 0 0 10px 0;">
+      <div class="card-body">
+        <input class="form-control" type="text"
+               [(ngModel)]="input.father.firstName" placeholder="First name">
+        <input class="form-control" type="text" style="margin: 10px 0 0 0;"
+               [(ngModel)]="input.father.secondName" placeholder="Second name">
+        <input class="form-control" type="text" style="margin: 10px 0 0 0;"
+               [(ngModel)]="input.father.birthDate" placeholder="Date of birth">
+        <input class="form-control" type="text" style="margin: 10px 0 0 0;"
+               [(ngModel)]="input.father.pesel" placeholder="PESEL" maxlength="11">
+      </div>
+    </div>
+  </div>
+
+  <div id="step-children" class="form-group" *ngIf="step === STEP_CHILDREN">
+    <h3>Step two: children</h3>
+
+    <div *ngFor="let child of input.children" class="card" style="margin: 0 0 10px 0;">
+      <button *ngIf="child.collapsed" class="btn btn-light" (click)="child.collapsed = false">
+        <div *ngIf="child.firstName && child.secondName">{{child.firstName}} {{child.secondName}}</div>
+        <div *ngIf="!(child.firstName && child.secondName)">Expand</div>
+      </button>
+
+      <div class="card-body" *ngIf="!child.collapsed">
+        <input class="form-control" type="text"
+               [(ngModel)]="child.firstName" placeholder="First name">
+        <input class="form-control" type="text" style="margin: 10px 0 0 0;"
+               [(ngModel)]="child.secondName" placeholder="Second name">
+        <input class="form-control" type="text" style="margin: 10px 0 0 0;"
+               [(ngModel)]="child.birthDate" placeholder="Date of birth">
+        <input class="form-control" type="text" style="margin: 10px 0 0 0;"
+               [(ngModel)]="child.pesel" placeholder="PESEL" maxlength="11">
+        <select class="form-control" style="margin: 10px 0 0 0;"
+                [(ngModel)]="child.sex">
+          <option disabled selected value hidden>Choose sex</option>
+          <option [ngValue]="'M'">Male</option>
+          <option [ngValue]="'F'">Female</option>
+        </select>
+
+        <div class="d-flex" style="margin: 20px 0 0 0;">
+          <button class="btn btn-danger" (click)="removeChild(child)">Delete</button>
+          <button class="ml-auto btn btn-secondary" (click)="child.collapsed = true">Collapse</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" style="width: 100%" (click)="createChild()">
+      New child
+    </button>
+  </div>
+
+  <div class="d-flex" style="margin: 30px 0 0 0;">
+    <button id="btn-prev" class="btn btn-secondary" (click)="prevStep()">
+      {{prevText}}
+    </button>
+    <button id="btn-next" class="ml-auto btn btn-primary" (click)="nextStep()">
+      {{nextText}}
+    </button>
+  </div>
+</div>

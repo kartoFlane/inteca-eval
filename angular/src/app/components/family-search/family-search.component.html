@@ -1,0 +1,50 @@
+<div style="margin: 50px;">
+  <div class="jumbotron container-fluid" style="padding: 40px;">
+    <div class="row" style="margin: 0;">
+      <input class="form-control col-sm" type="text" style="margin: 0 10px 0 0;"
+             [(ngModel)]="input.firstName" placeholder="First name">
+      <input class="form-control col-sm" type="text" style="margin: 0 10px 0 0;"
+             [(ngModel)]="input.secondName" placeholder="Second name">
+      <input class="form-control col-sm" type="text" style="margin: 0 10px 0 0;"
+             [(ngModel)]="input.birthDate" placeholder="Date of birth">
+      <input class="form-control col-sm" type="text" style="margin: 0 10px 0 0;"
+             [(ngModel)]="input.pesel" placeholder="PESEL"
+             maxlength="11">
+      <select class="form-control col-sm" style="margin: 0 10px 0 0;"
+              [(ngModel)]="input.sex">
+        <option [ngValue]="null">Any sex</option>
+        <option [ngValue]="'M'">Male</option>
+        <option [ngValue]="'F'">Female</option>
+      </select>
+
+      <button class="btn btn-primary" (click)="performSearch();">Search</button>
+    </div>
+  </div>
+
+  <div class="jumbotron" style="padding: 40px;">
+    <div style="margin: 0;">
+      <div class="container-fluid list-group-item list-group-item-dark">
+        <div class="row">
+          <div class="col-sm">Family ID</div>
+          <div class="col-sm">Father's Name</div>
+          <div class="col-sm">Father's Last Name</div>
+          <div class="col-sm">Father's Date of Birth</div>
+          <div class="col-sm">Father's PESEL</div>
+        </div>
+      </div>
+
+      <ul class="list-group">
+        <a *ngFor="let family of searchResult" class="container-fluid list-group-item list-group-item-action"
+            routerLink="/family/{{family.id}}">
+          <div class="row">
+            <div class="col-sm">{{family.id}}</div>
+            <div class="col-sm">{{family.father.firstName}}</div>
+            <div class="col-sm">{{family.father.secondName}}</div>
+            <div class="col-sm">{{family.father.birthDate}}</div>
+            <div class="col-sm">{{family.father.pesel}}</div>
+          </div>
+        </a>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<nav class="navbar navbar-dark bg-dark mb-5">
+  <a class="navbar-brand" routerLink="/">Inteca Eval</a>
+
+  <div class="navbar-expand mr-auto">
+    <div class="nav navbar-nav">
+      <a class="nav-item nav-link" *ngFor="let item of menuItems" routerLink="{{item.link}}">
+        {{item.name | uppercase}}
+      </a>
+    </div>
+  </div>
+</nav>

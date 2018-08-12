@@ -1,0 +1,28 @@
+<div *ngIf="family" class="jumbotron" style="margin: 0 auto;width:30%;min-width:256px;">
+  <h2>Family #{{family.id}}</h2>
+
+  <div>
+    Assigned father:
+  </div>
+
+  <a class="list-group-item list-group-item-action" style="margin: 10px 0 10px 0;"
+      routerLink="/father/{{family.father.id}}">
+    {{family.father.firstName}} {{family.father.secondName}}
+  </a>
+
+  <div *ngIf="family.children">
+    Children ({{family.children.length}}):
+
+    <ul class="list-group" style="margin: 10px 0 0 0;">
+      <a class="list-group-item list-group-item-action" *ngFor="let child of family.children"
+          routerLink="/child/{{child.id}}">
+        {{child.firstName}} {{child.secondName}}
+      </a>
+    </ul>
+  </div>
+
+  <button type="button" class="btn btn-primary" style="margin: 50px 0 0 0;"
+          (click)="goBack();">
+    Back
+  </button>
+</div>

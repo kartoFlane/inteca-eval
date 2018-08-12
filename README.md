@@ -1,8 +1,9 @@
 ## Requirements
 
 - JDK 8 or higher
-- Docker
+- Docker (built on Windows 7 with Docker Toolbox, but *should* work with regular Docker too)
 - Node.js
+- Maven
 
 
 ## Compiling & building
@@ -34,6 +35,7 @@ docker-compose up
 
 When deploying the containers for the first time, the SpringBoot app container will fail and restart a few times while database is being initialized, until it finally succeeds. This process can take up to 2 minutes. My attempts to make the app gracefully wait for the database to become available have been unsuccessful thus far.
 
+Once all containers have finished starting up, the Angular app will be available at `localhost:80`. SpringBoot app serving the REST API will be available at `localhost:8080`. In case of Docker Toolbox, replace `localhost` with `DOCKER_HOST` (`192.168.99.100`).
 
 To gracefully shut down the containers, run:
 ```shell
@@ -41,76 +43,3 @@ docker-compose down
 ```
 
 When running `docker-compose` in interactive mode, trying to break out via Ctrl+C will cause the containers to be stopped, *but not removed*. To clean them up, run `docker-compose down`.
-
-
-## REST endpoint documentation
-
-
-### `/family`
-
-* `GET` - returns a list of all families.
-* `POST` - creates a new empty family entity, and returns a response with its location.
-
-### `/family/$id`
-
-* `GET` - returns a view of family with id `$id`.
-* `PUT` - modifies the family with id `$id` either by adding a father, or a child. The specific action taken depends on the content of the request body:
-	* `{ "fatherId": # }` - adds a father
-	* `{ "childId": # }` - adds a child
-
-### `/family/search`
-
-* `GET` - returns a list of all families which contain at least one child which matches any of the specified request parameters:
-	* `firstName` - string
-	* `secondName` - string
-	* `pesel` - string
-	* `birthDate` - string, with date format: `yyyy-MM-dd`
-	* `sex` - string, values: `M` or `F`
-
-&nbsp;
-
-### `/father`
-
-* `GET` - returns a list of all fathers.
-* `POST` - creates a new father entity from parameters specified in the request body, and returns a response with its location:
-	* `firstName` - string
-	* `secondName` - string
-	* `pesel` - string
-	* `birthDate` - string, with date format: `yyyy-MM-dd`
-
-### `/father/$id`
-
-* `GET` - returns a view of father with id `$id`.
-
-### `/father/search`
-
-* `GET` - returns a list of all fathers which match any of the specified request parameters:
-	* `firstName` - string
-	* `secondName` - string
-	* `pesel` - string
-	* `birthDate` - string, with date format: `yyyy-MM-dd`
-
-&nbsp;
-
-### `/child`
-
-* `GET` - returns a list of all children.
-* `POST` - creates a new child entity from parameters specified in the request body, and returns a response with its location:
-	* `firstName` - string
-	* `secondName` - string
-	* `pesel` - string
-	* `birthDate` - string, with date format: `yyyy-MM-dd`
-	* `sex` - string, values: `M` or `F`
-
-### `/child/$id`
-
-* `GET` - returns a view of child with id `$id`.
-
-### `/father/search`
-
-* `GET` - returns a list of all children which match any of the specified request parameters:
-	* `firstName` - string
-	* `secondName` - string
-	* `pesel` - string
-	* `birthDate` - string, with date format: `yyyy-MM-dd`
-	* `sex` - string, values: `M` or `F`

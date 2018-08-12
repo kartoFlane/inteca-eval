@@ -17,10 +17,8 @@ public class Family {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "family")
 	private Father father;
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "family")
 	private Set<Child> children = new HashSet<>();
 
@@ -36,10 +34,8 @@ public class Family {
 		this.id = id;
 	}
 
-	public Integer getFatherId() {
-		return father != null
-				? father.getId()
-				: null;
+	public Father getFather() {
+		return this.father;
 	}
 
 	public void setFather(Father father) {
@@ -50,13 +46,13 @@ public class Family {
 		return children.add(child);
 	}
 
+	@JsonIgnore
 	public Collection<Integer> getChildrenIds() {
 		return children.stream()
 				.map(Child::getId)
 				.collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
 	}
 
-	@JsonIgnore
 	public Collection<Child> getChildren() {
 		return Collections.unmodifiableSet(children);
 	}

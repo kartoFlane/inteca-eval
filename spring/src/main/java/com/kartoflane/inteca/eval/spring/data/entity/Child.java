@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kartoflane.inteca.eval.spring.data.validator.ChildValidator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -96,6 +97,11 @@ public class Child {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+
+	@JsonIgnore
+	public boolean isValid() {
+		return ChildValidator.getInstance().isValid(this);
 	}
 
 	@Override

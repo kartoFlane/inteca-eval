@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kartoflane.inteca.eval.spring.data.validator.FatherValidator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -85,6 +86,11 @@ public class Father {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	@JsonIgnore
+	public boolean isValid() {
+		return FatherValidator.getInstance().isValid(this);
 	}
 
 	@Override

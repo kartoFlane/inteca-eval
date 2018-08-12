@@ -24,13 +24,8 @@ public class FatherRestController {
 
 	@PostMapping
 	ResponseEntity<?> createFather(@RequestBody Father input) {
-		if (
-			input.getFirstName() == null ||
-			input.getSecondName() == null ||
-			input.getPesel() == null ||
-			input.getBirthDate() == null
-		) {
-			return ResponseEntity.badRequest().body("Missing a required field, got: " + input.toString());
+		if (!input.isValid()) {
+			return ResponseEntity.badRequest().build();
 		}
 
 		Father result = fatherRepository.save(new Father(

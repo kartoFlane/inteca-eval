@@ -24,18 +24,8 @@ public class ChildRestController {
 
 	@PostMapping
 	ResponseEntity<?> createChild(@RequestBody Child input) {
-		if (
-			input.getFirstName() == null ||
-			input.getSecondName() == null ||
-			input.getPesel() == null ||
-			input.getBirthDate() == null ||
-			input.getSex() == null
-		) {
-			return ResponseEntity.badRequest().body("Missing a required field, got: " + input.toString());
-		}
-
-		if (!input.getSex().matches("[MF]")) {
-			return ResponseEntity.badRequest().body("Invalid value for field 'sex': " + input.getSex());
+		if (!input.isValid()) {
+			return ResponseEntity.badRequest().build();
 		}
 
 		Child result = childRepository.save(new Child(

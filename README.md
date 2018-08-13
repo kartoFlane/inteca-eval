@@ -28,7 +28,7 @@ Once the Maven script is finished, two Docker images will have been created: `tb
 ## Running
 
 
-To simplify deployment, [`a Compose file`](#docker-compose.yml) is provided, which starts all three containers. To run it, change the Docker terminal's working directory to the project's root directory, and execute the following command:
+To simplify deployment, [a Compose file](#docker-compose.yml) is provided, which starts all three containers. To run it, change the Docker terminal's working directory to the project's root directory, and execute the following command:
 ```shell
 docker-compose up
 ```
@@ -43,3 +43,14 @@ docker-compose down
 ```
 
 When running `docker-compose` in interactive mode, trying to break out via Ctrl+C will cause the containers to be stopped, *but not removed*. To clean them up, run `docker-compose down`.
+
+
+## Validation
+
+
+In order to prevent malformed records from being added to the SQL DB, the SpringBoot app includes some simple validation logic for data received at the REST endpoints. As such, the user will have to input correctly-formatted data in the Angular app's interface, as the validation logic implemented by that component is very minimal in comparison:
+
+- `firstName` and `secondName`: anything, just don't leave it empty
+- `pesel`: exactly 11 digits, not necessarily a valid PESEL (the input element for this field is configured to not accept more characters)
+- `birthDate`: `yyyy-MM-dd`
+- `sex`: either `M` or `F` (input for this field is handled via dropdowns)

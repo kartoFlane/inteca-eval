@@ -38,6 +38,14 @@ public class FamilyRestController {
 
 	@GetMapping("/{familyId}")
 	Family readFamily(@PathVariable Integer familyId) {
+		// TBachminski:
+		// Technically, in order to conform to the specification document
+		// presented by Inteca, this method should be a composite
+		// service, calling other services which return Father and Child
+		// representations.
+		// However, thanks to the way the entities are designed, and
+		// JoinColumn/OneTo__ annotations, all required data is available
+		// without having to make any additional calls.
 		return familyRepository.findById(familyId)
 				.orElseThrow(() -> new FamilyNotFoundException(familyId));
 	}
